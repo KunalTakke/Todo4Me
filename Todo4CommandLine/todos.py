@@ -1,31 +1,55 @@
-import os # for storing the todos in a file system
+# import os # for storing the todos in a file system
 from colorama import Back,Fore,Style # color library
 
 # defining the functions for adding,deleting,editing and printing the todos
-
 def add_todo():
+    todos=[] # initialize an empty list
     todo=input("Enter the Todo to be added :")
-
+    # read all todos till we reach the end of the file
+    with open("Todos.txt","r") as f:
+        todos=f.readlines()
+    # test case 1:check if the same todo exists in the list or not
+    # add new todo as a string
+    todos.append(todo+"\n")
     with open("Todos.txt","w") as f:
-        f.write(todo+"/n")
+        for t in todos:
+            f.writelines(t)
     print()
     print(Fore.GREEN+"Operation Completed: Added a new todo")
     print(Style.RESET_ALL)
 
 def delete_todo():
-    pass
+    todos=[]
+    todo=int(input("Enter the todo item number to be deleted :"))
+    try:
+        with open("Todos.txt", "r") as f:
+            todos = f.readlines()
+        actual=todo-1
+        if(actual<0 or actual>=len(todos)):
+            print("Invalid number given")
+        else:
+            todos.pop(todo - 1)
+        with open("Todos.txt", "w") as f:
+            for t in todos:
+                f.writelines(t)
+    except:
+        print("Invalid number given, plz check the todo number")
+
+
+
 
 def edit_todo():
     pass
 
 def print_todo():
-    todo=[] # create a list
+    todo=[]
     with open("Todos.txt","r") as f:
-        todo=f.read()
-
+        todo=f.readlines()
+    print(f"The todo as a list is {todo}")
+    print(f"the length of the todo is {len(todo)}")
     # print the todo
     for t in todo:
-        print(t)
+        print(f"{todo.index(t)+1}.{t}")
 
 
 
