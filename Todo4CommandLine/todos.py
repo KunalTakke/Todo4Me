@@ -33,23 +33,43 @@ def delete_todo():
             for t in todos:
                 f.writelines(t)
     except:
-        print("Invalid number given, plz check the todo number")
+        print(Fore.RED+"Plz enter a valid number as an input!")
+        print(Style.RESET_ALL)
 
 
 
 
 def edit_todo():
-    pass
+    todos=[]
+    while True:
+        try:
+            todo=int(input("Enter the todo item number to be edited :"))
+            break
+        except:
+            print(Fore.RED+"Plz enter a valid number as an input!")
+            print(Style.RESET_ALL)
+            print()
+    with open("Todos.txt","r") as f:
+        todos=f.readlines()
+    new_todo=input("Enter the new todo :").strip()
+    todos[todo-1]=new_todo+"\n"
+    with open("Todos.txt","w") as f:
+        for t in todos:
+            f.writelines(t)
+    print(Fore.GREEN+"Operation Completed: New todo edited successfully !")
+    print(Style.RESET_ALL)
+    print()
+
 
 def print_todo():
     todo=[]
     with open("Todos.txt","r") as f:
         todo=f.readlines()
-    print(f"The todo as a list is {todo}")
-    print(f"the length of the todo is {len(todo)}")
     # print the todo
     for t in todo:
+        print(Fore.YELLOW)
         print(f"{todo.index(t)+1}.{t}")
+        print(Style.RESET_ALL)
 
 
 
@@ -78,7 +98,6 @@ if __name__=="__main__":
         elif query==3:
             # call edit_todo
             edit_todo()
-            pass
         elif query==4:
             print_todo()
         elif query==5:
